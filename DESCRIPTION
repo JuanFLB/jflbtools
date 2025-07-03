@@ -16,3 +16,19 @@ Encoding: UTF-8
 LazyData: true
 URL: https://github.com/JuanFLB/jflbtools
 BugReports: https://github.com/JuanFLB/jflbtools/issues
+RoxygenNote: 7.3.2
+Imports: 
+    broom,
+    dplyr,
+    enrichR,
+    forcats,
+    ggplot2,
+    ggpubr,
+    gt,
+    MetBrewer,
+    purrr,
+    rlang,
+    rstatix,
+    stringr,
+    tibble,
+    tidyr
