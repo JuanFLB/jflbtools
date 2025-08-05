@@ -1,0 +1,22 @@
+## jflbtools
+
+
+A package created by Juan Lafuente to support streamlined and reproducible bioinformatic workflows through reusable utilities.
+
+### Installation
+
+```r
+
+# install remotes if not already installed
+install.packages("remotes")
+remotes::install_github("JuanFLB/jflbtools")
+
+```
+
+Once installed:
+
+  ```r
+
+library(jflbtools)
+
+```

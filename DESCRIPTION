@@ -1,11 +1,11 @@
 Package: jflbtools
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Set of commonly used functions
 Version: 0.1.0
 Authors@R: c(
     person(
-      "Jane", "Doe",
-      email = "jane@example.com",
+      "Juan", "Lafuente",
+      email = "jflbphd@gmail.com",
       role = c("aut", "cre")
     )
   )
