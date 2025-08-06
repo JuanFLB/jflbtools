@@ -2,20 +2,65 @@
 % Please edit documentation in R/update_board_index.R
 \name{update_board_index}
 \alias{update_board_index}
-\title{Update the board index with a new study run entry}
+\title{Update Study Board Index}
 \usage{
-update_board_index(study_run, path = here::here("data/pins/board_index.tsv"))
+update_board_index(
+  study_run,
+  pins_path = here::here("data/pins"),
+  index_file = "board_index.tsv"
+)
 }
 \arguments{
-\item{study_run}{Character. Unique name for this analysis run (e.g. "06b_ProjectX" or "06b_ProjectX_rerun1").}
+\item{study_run}{Character. Name of the current study run, e.g., `"06b_rerun"`.
+Must begin with a numeric `study_id` (e.g., `"06b"`). This ID is used to
+group related runs.}
 
-\item{path}{Character. Path to the `board_index.tsv` file. Default: "data/pins/board_index.tsv".}
+\item{pins_path}{Character. Path to the base directory where boards will be
+created. Default is `here::here("data/pins")`.}
+
+\item{index_file}{Character. Name of the TSV file storing the index table.
+Default is `"board_index.tsv"`.}
 }
 \value{
-Invisibly returns the updated tibble. A message is shown if updated.
+Invisibly returns the new entry (`tibble`) created. Side effects include:
+- Folder creation (`fs::dir_create()`),
+- Index update (`readr::write_tsv()`),
+- Message logging to guide user verification.
 }
 \description{
-This function registers a new analysis run (main or rerun) by adding a row
-to the board index TSV. It will treat the first time the study_id is registered as main
-It prevents duplication and assigns a consistent board ID based on the study ID.
+Registers a new `study_run` into the study board index, managing the logic
+for main, first, and rerun board creation. It ensures consistent structure,
+prevents overwrites, and optionally creates corresponding board folders.
+}
+\details{
+The function performs the following steps:
+
+1. Extracts `study_id` from `study_run` and validates it.
+2. Loads the index file or initializes an empty index if not present.
+3. Checks if `study_run` is already indexed and stops if so.
+4. Determines the correct registration scenario:
+  - If no previous runs exist, creates two entries: `"main"` and `"first"` boards.
+  - If two or more entries exist and both `"main"` and `"first"` are present,
+    registers a new `"rerun"` board.
+  - If a malformed or unexpected structure is detected (e.g., only one prior entry),
+    an error is raised to prevent incorrect registration.
+5. Creates the corresponding board folders if not already present.
+6. Appends the new entry to the index and saves the updated table.
+}
+\section{Index Structure}{
+
+The index file is a TSV with the following columns:
+- `study_id`: extracted numeric prefix from the run name (e.g., `"06b"`),
+- `study_name`: the canonical name for the study (taken from first `study_run`),
+- `study_run`: the name of the individual run (e.g., `"06b_rerun2"`),
+- `board_tag`: one of `"main"`, `"first"`, `"rerun"`,
+- `board_name`: the name of the board (e.g., `"board_06b"`, `"board_06b_02"`),
+- `board_path`: full path to the board directory.
+}
+
+\examples{
+\dontrun{
+update_board_index("06b_rerun")
+}
+
 }
