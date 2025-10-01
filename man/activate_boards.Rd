@@ -4,10 +4,13 @@
 \alias{activate_boards}
 \title{Activate main and current boards for a given study_run}
 \usage{
-activate_boards(study_run)
+activate_boards(study_run, pins_path = here::here("data/pins"))
 }
 \arguments{
 \item{study_run}{A character string indicating the specific study run to activate.}
+
+\item{pins_path}{Character. Path to the base directory where boards will be
+created. Default is `here::here("data/pins")`.}
 }
 \value{
 A list with two elements: \code{main} (main board object) and \code{current} (requested board object).

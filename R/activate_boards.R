@@ -6,16 +6,19 @@
 #'
 #' @param study_run A character string indicating the specific study run to activate.
 #'
+#' @param pins_path Character. Path to the base directory where boards will be
+#' created. Default is `here::here("data/pins")`.
+#'
 #' @return A list with two elements: \code{main} (main board object) and \code{current} (requested board object).
 #' @export
 #'
 #' @examples
 #' boards <- activate_boards("01A_rerun2")
 #' pins::pin_write(board = boards$main, x = df, name = "my_data", type = "qs")
-activate_boards <- function(study_run) {
+activate_boards <- function(study_run, pins_path = here::here("data/pins") ) {
 
   # Load the index file
-  index_path <- here::here("data/pins/board_index.tsv")
+  index_path <- here::here(pins_path, "board_index.tsv")
   if (!fs::file_exists(index_path)) {
     stop(glue::glue("Index file not found at: {index_path}"))
   }
